@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathias Wouters - Eindproject - API Development</title>
+    <!-- Alpine JS Script -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style/style.css" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div
+      x-data="{ 
+      brands: null,
+      brands_id: null,
+      brands_name: null,
+      models: null,
+      models_id: null,
+      models_name: null,
+      models_year: null,
+      models_bodytype: null,
+      models_power: null,
+      models_brand_id: null,
+      responseData: null,
+      responseDataBrand: null,
+      responseDataOwner: null,
+      responseDataToken: null,
+
+      inputBrandID: null,
+      inputBrandName: null,
+      inputModelID: null,
+      inputModelName: null,
+      inputModelYear: null,
+      inputModelBodytype: null,
+      inputModelPower: null,
+      inputModelBrandID: null,
+
+      postModelID: null,
+      postModelName: null,
+      postModelYear: null,
+      postModelBodytype: null,
+      postModelPower: null,
+      postModelCylinders: null,
+      postModelLiters: null,
+      postModelBrandID: null,
+      postBrandID: null,
+      postBrandName: null,
+      postBrandCountry: null,
+      postBrandHeadquarters: null,
+      postBrandDate: null,
+      postBrandOwnerID: null,
+      postOwnerName: null,
+      postOwnerPassword: null,
+      postOwnerTokenUsername: null,
+      postOwnerTokenPassword: null,
+
+      async get_brands(){
+        this.brands = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/brand/',
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_brand(){
+        this.brands_id = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/brand/id/', + this.inputBrandID,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_brand_name(){
+        this.brands_name = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/brand/name/', + this.inputBrandName,
+        {
+          method: 'GET'
+        })).json();
+      }
+      
+      async get_models(){
+        this.models = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/',
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model(){
+        this.models_id = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/id/', + this.inputModelID,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model_name(){
+        this.models_name = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/name/', + this.inputModelName,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model_year(){
+        this.models_year = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/year/', + this.inputModelYear,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model_bodytype(){
+        this.models_bodytype = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/bodytype/', + this.inputModelBodytype,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model_power(){
+        this.models_power = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/power/', + this.inputModelPower,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async get_model_brand(){
+        this.models_brand_id = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/model/brand/', + this.inputModelBrandID,
+        {
+          method: 'GET'
+        })).json();
+      }
+
+      async post_model(){
+        this.responseData = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/brand/' + this.inputBrandID + '/model/',
+        {
+          method: 'POST',
+          body :JSON.stringify({
+            name: this.postModelName,
+            year: this.postModelYear,
+            body_type: this.postModelBodytype,
+            power_hp: this.postModelPower,
+            cylinders: this.postModelCylinders,
+            liters: this.postModelLiters,
+            id: this.postModelID,
+            brand_id: this.postModelBrandID,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })).json();
+      }
+
+      async post_brand(){
+        this.responseDataBrand = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/brand/',
+        {
+          method: 'POST',
+          body :JSON.stringify({
+            id: this.postBrandID,
+            headquarters_city: this.postBrandHeadquarters,
+            owner_id: this.postBrandOwnerID,
+            name: this.postBrandName,
+            country: this.postBrandCountry,
+            date_founded: this.postBrandDate,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })).json();
+      }
+
+      async post_owner(){
+        this.responseDataOwner = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/owner/',
+        {
+          method: 'POST',
+          body :JSON.stringify({
+            name: this.postOwnerName,
+            password: this.postOwnerPassword,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })).json();
+      }
+
+      async post_token(){
+        this.responseDataToken = await (await fetch('https://cars-mathiaswouters.cloud.okteto.net/token',
+        {
+          method: 'POST',
+          body :JSON.stringify({
+            client_id: '',
+            client_secret: '',
+            scope: '',
+            grant_type: '',
+            refresh_token: '',
+            username: this.postOwnerTokenUsername,
+            password: this.postOwnerTokenPassword,
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+        })).json();
+      }
+    }"
+    >
+      <!--=================== INTRO ===================-->
+      <header>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <div>
+                <h1>Off-Road Cars API</h1>
+              </div>
+              <div>
+                <h1>Welcome to the Off-Road Car API</h1>
+                <p>This API allows you to access information about a wide variety of off-road vehicles, including their specifications. Whether you are an enthusiast looking for detailed information about your favorite off-road cars or a developer building an app that utilizes this data, our API has you covered.</p>
+                <p>Start exploring the world of off-road cars today with our comprehensive API!</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <img src="./assets/car1.jpg" width="562" height="375" alt="Off-Road car" />
+            </div>
+            <div class="col-sm-6">
+              <img src="./assets/car4.jpg" width="587" height="356" alt="Off-Road car" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!--=================== MODEL ===================-->
+      <div id="model" class="mb-4 mt-5">
+        <!-- All models -->
+        <div>
+          <div class="text-center col-8 mx-auto">
+            <h2 class="mb-5">All models</h2>
+          </div>
+          <div class="row">
+            <template x-for="model in models">
+              <div class="col-4 d-flex justify-content-center">
+                <div class="frame">
+                  <h3 x-text="model.name"></h3>
+                  <ul>
+                    <li>Name: <strong x-text="model.name"></strong></li>
+                    <li>Year: <strong x-text="model.year"></strong></li>
+                    <li>Body-type: <strong x-text="model.body_type"></strong></li>
+                    <li>Power: <strong x-text="model.power_hp"></strong>hp</li>
+                    <li>Cylinders: <strong x-text="model.cylinders"></strong></li>
+                    <li>Liters: <strong x-text="model.liters"></strong></li>
+                    <li>ID: <strong x-text="model.id"></strong></li>
+                    <li>Brand ID: <strong x-text="model.brand_id"></strong></li>
+                  </ul>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Model ID -->
+        <div class="row mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>Model ID</h2>
+            <input class="col-6" type="text" x-model="inputModelID" />
+            <button id="modelidsearch" class="col-6" x-on:click="get_model">Search</button>
+            <div id="overviewModelID" class="invisible">
+              <div class="col-12 frame">
+                <h3 x-text="model.name"></h3>
+                <ul>
+                  <li>Name: <strong x-text="model.name"></strong></li>
+                  <li>Year: <strong x-text="model.year"></strong></li>
+                  <li>Body-type: <strong x-text="model.body_type"></strong></li>
+                  <li>Power: <strong x-text="model.power_hp"></strong>hp</li>
+                  <li>Cylinders: <strong x-text="model.cylinders"></strong></li>
+                  <li>Liters: <strong x-text="model.liters"></strong></li>
+                  <li>ID: <strong x-text="model.id"></strong></li>
+                  <li>Brand ID: <strong x-text="model.brand_id"></strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Name -->
+        <div class="row mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>Model Name</h2>
+            <input class="col-6" type="text" x-model="inputModelName" />
+            <button id="modelnamesearch" class="col-6" x-on:click="get_model_name">Search</button>
+            <div id="overviewModelName" class="invisible">
+              <div class="col-12 frame">
+                <h3 x-text="models_name.name"></h3>
+                <ul>
+                  <li>Name: <strong x-text="models_name.name"></strong></li>
+                  <li>Year: <strong x-text="models_name.year"></strong></li>
+                  <li>Body-type: <strong x-text="models_name.body_type"></strong></li>
+                  <li>Power: <strong x-text="models_name.power_hp"></strong>hp</li>
+                  <li>Cylinders: <strong x-text="models_name.cylinders"></strong></li>
+                  <li>Liters: <strong x-text="models_name.liters"></strong></li>
+                  <li>ID: <strong x-text="models_name.id"></strong></li>
+                  <li>Brand ID: <strong x-text="models_name.brand_id"></strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Year -->
+        <div class="row mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>Model Year</h2>
+            <input class="col-6" type="text" x-model="inputModelYear" />
+            <button id="modelyearsearch" class="col-6" x-on:click="get_model_year">Search</button>
+            <div id="overviewModelYear" class="invisible">
+              <div class="col-12 frame">
+                <h3 x-text="model.name"></h3>
+                <ul>
+                  <li>Name: <strong x-text="model.name"></strong></li>
+                  <li>Year: <strong x-text="model.year"></strong></li>
+                  <li>Body-type: <strong x-text="model.body_type"></strong></li>
+                  <li>Power: <strong x-text="model.power_hp"></strong>hp</li>
+                  <li>Cylinders: <strong x-text="model.cylinders"></strong></li>
+                  <li>Liters: <strong x-text="model.liters"></strong></li>
+                  <li>ID: <strong x-text="model.id"></strong></li>
+                  <li>Brand ID: <strong x-text="model.brand_id"></strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Body Type -->
+        <div class="row mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>Model Body Type</h2>
+            <input class="col-6" type="text" x-model="inputModelBodytype" />
+            <button id="modelbodytypesearch" class="col-6" x-on:click="get_model_bodytype">Search</button>
+            <div id="overviewModelBodytype" class="invisible">
+              <div class="col-12 frame">
+                <h3 x-text="model.name"></h3>
+                <ul>
+                  <li>Name: <strong x-text="model.name"></strong></li>
+                  <li>Year: <strong x-text="model.year"></strong></li>
+                  <li>Body-type: <strong x-text="model.body_type"></strong></li>
+                  <li>Power: <strong x-text="model.power_hp"></strong>hp</li>
+                  <li>Cylinders: <strong x-text="model.cylinders"></strong></li>
+                  <li>Liters: <strong x-text="model.liters"></strong></li>
+                  <li>ID: <strong x-text="model.id"></strong></li>
+                  <li>Brand ID: <strong x-text="model.brand_id"></strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Power -->
+        <div class="row mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>Model Power</h2>
+            <input class="col-6" type="text" x-model="inputModelPower" />
+            <button id="modelpowersearch" class="col-6" x-on:click="get_model_power">Search</button>
+            <div id="overviewModelPower" class="invisible">
+              <div class="col-12 frame">
+                <h3 x-text="model.name"></h3>
+                <ul>
+                  <li>Name: <strong x-text="model.name"></strong></li>
+                  <li>Year: <strong x-text="model.year"></strong></li>
+                  <li>Body-type: <strong x-text="model.body_type"></strong></li>
+                  <li>Power: <strong x-text="model.power_hp"></strong>hp</li>
+                  <li>Cylinders: <strong x-text="model.cylinders"></strong></li>
+                  <li>Liters: <strong x-text="model.liters"></strong></li>
+                  <li>ID: <strong x-text="model.id"></strong></li>
+                  <li>Brand ID: <strong x-text="model.brand_id"></strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEER BY BREWERY ID-->
+        <div class="mb-4 mt-5">
+          <div class="text-center col-8 mx-auto">
+            <h2>BEER BY BREWERY ID</h2>
+            <input class="col-6" type="text" x-model="inputBreweryId" />
+            <button id="breweryIdSearch" class="col-6" x-on:click="get_beer_per_brewery">Search</button>
+          </div>
+          <div id="overBreweryID" class="invisible">
+            <div class="row">
+              <template x-for="beer in beersFromBrewery">
+                <div class="col-4 d-flex justify-content-center">
+                  <div class="frame">
+                    <h3 x-text="beer.name"></h3>
+                    <ul>
+                      <li>Volume: <strong x-text="beer.volume"></strong></li>
+                      <li>Alcohol percentage: <strong x-text="beer.alcohol_perc"></strong>%</li>
+                      <li>type: <strong x-text="beer.type"></strong></li>
+                      <li>Brewery: <strong x-text="beer.brewery_id"></strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post model -->
+        <div class="row">
+          <div class="col-8 mx-auto input" id="inputModel">
+            <h2>Add new model</h2>
+            <form onsubmit="return false" id="formModel">
+              <div class="form-group">
+                <label for="modelName">Name:</label>
+                <input id="modelName" class="form-control" type="text" x-model="postModelName" />
+              </div>
+              <div class="form-group">
+                <label for="modelYear">Year:</label>
+                <input id="modelYear" class="form-control" type="number" x-model="postModelYear" />
+              </div>
+              <div class="form-group">
+                <label for="modelBodytype">Body Type:</label>
+                <input id="modelBodytype" class="form-control" type="text" x-model="postModelBodytype" />
+              </div>
+              <div class="form-group">
+                <label for="modelPower">Power:</label>
+                <input id="modelPower" class="form-control" type="number" x-model="postModelPower" />
+              </div>
+              <div class="form-group">
+                <label for="modelCylinders">Cylinders:</label>
+                <input id="modelCylinders" class="form-control" type="number" x-model="postModelCylinders" />
+              </div>
+              <div class="form-group">
+                <label for="modelLiters">Liters:</label>
+                <input id="modelLiters" class="form-control" type="number" x-model="postModelLiters" />
+              </div>
+              <div class="form-group">
+                <label for="modelID">ID:</label>
+                <input id="modelID" class="form-control" type="number" x-model="postModelID" />
+              </div>
+              <div class="form-group">
+                <label for="modelBrandID">Brand ID:</label>
+                <input id="modelBrandID" class="form-control" type="number" x-model="postModelBrandID" />
+              </div>
+              <div>
+                <button id="postModel" x-on:click="post_model">Add model</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--=================== MODEL TEEEEEEEEEEEEEEEEEST ===================-->
+      <section>
+        <div class="container">
+          <div class="text-center section-title">
+            <h2>Models</h2>
+          </div>
+          <!------- MODELS ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>All Models</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL ID ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by ID</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL NAME ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by Name</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL YEAR ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by Year</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL BODY TYPE ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by Body Type</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL POWER ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by Power</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- MODEL BRAND ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Model by Brand</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- CREATE MODEL ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Add new Model</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+        </div>
+      </section>
+
+      <!--=================== BRAND ===================-->
+      <section>
+        <div class="container">
+          <div class="text-center section-title">
+            <h2>Brands</h2>
+          </div>
+          <!------- BRANDS ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>All Brands</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- BRAND ID ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Brand by ID</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- BRAND NAME ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Brand by Name</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+
+          <!------- CREATE BRAND ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Add new Brand</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+        </div>
+      </section>
+
+      <!--=================== OWNER ===================-->
+      <section>
+        <div class="container">
+          <div class="text-center section-title">
+            <h2>Owners</h2>
+          </div>
+          <!------- CREATE OWNER ------->
+          <div>
+            <div class="col-sm-12">
+              <h3>Add new Owner</h3>
+            </div>
+            <div class="row"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
